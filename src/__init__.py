@@ -1,0 +1,1 @@
+"""Src module para algoritmo genetico"""
