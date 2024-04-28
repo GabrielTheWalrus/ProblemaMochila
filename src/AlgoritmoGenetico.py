@@ -15,7 +15,8 @@ class AlgoritmoGenetico:
             taxa_mutacao : float = 0.1,
             mutacao_flag : bool = True,
             crossover_flag : bool = True,
-            tipo_selecao = TORNEIO
+            tipo_selecao = TORNEIO,
+            torneio_size : int = 3
         ):
         self.tamanho_populacao = tamanho_populacao
         self.max_geracoes = max_geracoes
@@ -24,6 +25,7 @@ class AlgoritmoGenetico:
         self.crossover_flag = crossover_flag
         self.populacao = []
         self.tipo_selecao = tipo_selecao
+        self.torneio_size = torneio_size
 
     def criar_populacao(self):
         '''
@@ -60,13 +62,13 @@ class AlgoritmoGenetico:
 
         return filho1, filho2
 
-    def selecao_torneio(self, populacao: List[Individuo], torneio_size: int = 3) -> list:
+    def selecao_torneio(self, populacao: List[Individuo]) -> list:
         '''
             Seleciona os pais usando o método de torneio.
         '''
         pais = []
         for _ in range(2):  # Dois pais para o crossover
-            participantes = random.sample(populacao, torneio_size)
+            participantes = random.sample(populacao, self.torneio_size)
             fitness = [self.calcular_fitness(participante) for participante in participantes]
             index_melhor_participante = fitness.index(max(fitness))
             melhor_participante = participantes[index_melhor_participante]
